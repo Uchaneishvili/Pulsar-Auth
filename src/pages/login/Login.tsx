@@ -1,10 +1,14 @@
+import { Link } from "react-router-dom";
 import {
 	EmailIcon,
 	PasswordIcon,
 	ShowPasswordIcon,
 } from "../../components/ui/icon";
 import styles from "./Login.module.css";
+import { useState } from "react";
 const Login = () => {
+	const [show, setShow] = useState(false);
+
 	return (
 		<>
 			<div className={styles.container}>
@@ -27,12 +31,17 @@ const Login = () => {
 					<div className={styles.inputForm}>
 						<PasswordIcon />
 						<input
-							type="password"
+							type={show ? "text" : "password"}
 							className={styles.input}
 							placeholder="Enter your Password"
 							autoComplete="false"
 						/>
-						<ShowPasswordIcon />
+						<span
+							className={styles.showPassword}
+							onClick={() => setShow(!show)}
+						>
+							<ShowPasswordIcon />
+						</span>
 					</div>
 
 					<div className={styles.flexRow}>
@@ -44,7 +53,10 @@ const Login = () => {
 					</div>
 					<button className={styles.buttonSubmit}>Sign In</button>
 					<p className={styles.p}>
-						Don't have an account? <span className={styles.span}>Sign Up</span>
+						Don't have an account?
+						<Link to="/register">
+							<span className={styles.span}>Sign Up</span>
+						</Link>
 					</p>
 				</form>
 			</div>

@@ -13,11 +13,18 @@ const App: React.FC = () => {
 	};
 
 	return (
-		<AuthProvider>
-			<AppProvider>
-				{location.pathname === "/login" ? getLoginLayout() : <MainLayout />}
-			</AppProvider>
-		</AuthProvider>
+		<>
+			<AuthProvider>
+				<AppProvider>
+					{location.pathname === "/login" ||
+					location.pathname === "/register" ? (
+						getLoginLayout()
+					) : (
+						<MainLayout />
+					)}
+				</AppProvider>
+			</AuthProvider>
+		</>
 	);
 };
 

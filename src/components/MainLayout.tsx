@@ -6,13 +6,16 @@ import PageHeader from "./PageHeader";
 
 const MainLayout: FC = () => {
 	const { loadUserInfo } = useContext(AuthContext);
+	const publicRoutes = ["/login", "/register"];
 
 	useEffect(() => {
 		const run = async () => {
-			try {
-				await loadUserInfo();
-			} catch (err) {
-				window.location.href = "/login";
+			if (!publicRoutes.includes(window.location.pathname)) {
+				try {
+					await loadUserInfo();
+				} catch (err) {
+					window.location.href = "/login";
+				}
 			}
 		};
 		run();

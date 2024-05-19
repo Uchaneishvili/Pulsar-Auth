@@ -38,6 +38,7 @@ export default class RequestHelper {
 					"/users/refreshToken",
 					"/users/register",
 				];
+
 				if (
 					request.url &&
 					allowedUrls.indexOf(request.url) === -1 &&
