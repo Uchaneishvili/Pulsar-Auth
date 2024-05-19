@@ -1,3 +1,18 @@
 body {
 	margin: 0;
 }
+
+.rightContainer {
+	display: flex;
+	align-items: center;
+}
+
+.header {
+	padding: 0;
+	position: relative;
+	display: flex;
+	height: 72px;
+	z-index: 9;
+	align-items: center;
+	background-color: #ffffff !important;
+}

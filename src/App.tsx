@@ -1,12 +1,24 @@
+import { useLocation } from "react-router-dom";
 import "./App.css";
-import Login from "./pages/login/Login";
+import { AppProvider } from "./contexts/AppContext";
+import { AuthProvider } from "./contexts/AuthContext";
+import { AppRoutes } from "./AppRoutes";
+import MainLayout from "./components/MainLayout";
 
-function App() {
+const App: React.FC = () => {
+	const location = useLocation();
+
+	const getLoginLayout = () => {
+		return <AppRoutes />;
+	};
+
 	return (
-		<div>
-			<Login />
-		</div>
+		<AuthProvider>
+			<AppProvider>
+				{location.pathname === "/login" ? getLoginLayout() : <MainLayout />}
+			</AppProvider>
+		</AuthProvider>
 	);
-}
+};
 
 export default App;

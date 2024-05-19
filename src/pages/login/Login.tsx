@@ -30,6 +30,7 @@ const Login = () => {
 							type="password"
 							className={styles.input}
 							placeholder="Enter your Password"
+							autoComplete="false"
 						/>
 						<ShowPasswordIcon />
 					</div>
