@@ -8,16 +8,17 @@ export function RequireAuth({ children }: { children: JSX.Element }) {
 	let location = useLocation();
 	const navigate = useNavigate();
 
+	console.log(userInfo);
 	if (!userInfo) {
 		// Redirect them to the /login page, but save the current location they were
 		// trying to go to when they were redirected. This allows us to send them
 		// along to that page after they login, which is a nicer user experience
 		// than dropping them off on the home page.
+		console.log("12");
 		const redirectUrl =
 			"/login?redirect=" +
 			encodeURIComponent(location.pathname + location.search);
 		navigate(redirectUrl, { replace: true });
-
 		return null;
 	}
 
@@ -27,6 +28,7 @@ export function RequireAuth({ children }: { children: JSX.Element }) {
 const TOKEN_KEY = "token";
 const USER_INFO_KEY = "userInfo";
 const LAST_TOKEN_REFRESH_TIME_KEY = "lastTokenRefreshTime";
+
 class AuthLocal {
 	static setToken(token: string | null) {
 		if (!token) {
@@ -61,7 +63,7 @@ class AuthLocal {
 		return JSON.parse(localStorage.getItem(USER_INFO_KEY) || "{}");
 	}
 
-	static updatLastTokenRefreshTime(): void {
+	static updateLastTokenRefreshTime(): void {
 		localStorage.setItem(
 			LAST_TOKEN_REFRESH_TIME_KEY,
 			new Date().getTime().toString()
@@ -70,7 +72,6 @@ class AuthLocal {
 
 	static getLastTokenRefreshTime(): number | null {
 		const time = localStorage.getItem(LAST_TOKEN_REFRESH_TIME_KEY);
-
 		return time ? +time : null;
 	}
 }

@@ -11,7 +11,7 @@ export interface ILoginInput {
 	password: string;
 }
 
-export interface IRegisterInput {
+export interface UserInput {
 	firstName: string;
 	lastName: string;
 	userName: string;
