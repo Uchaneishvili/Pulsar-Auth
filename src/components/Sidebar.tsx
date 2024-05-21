@@ -1,4 +1,4 @@
-import { HomeOutlined } from "@ant-design/icons";
+import { HomeOutlined, UserOutlined } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
 import { NavLink } from "react-router-dom";
 import "../App.css";
@@ -42,7 +42,12 @@ export const Sidebar = () => {
 				<Menu theme="dark" mode="inline">
 					<Menu.Item key="home" icon={<HomeOutlined />}>
 						<NavLink end to="/" className={navClassName}>
-							"Home"
+							Home
+						</NavLink>
+					</Menu.Item>
+					<Menu.Item key="users" icon={<UserOutlined />}>
+						<NavLink end to="/users" className={navClassName}>
+							Users
 						</NavLink>
 					</Menu.Item>
 				</Menu>

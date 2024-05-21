@@ -36,7 +36,7 @@ const Login = () => {
 			setUserInfo({
 				firstName: user.firstName,
 				lastName: user.lastName,
-				_id: user._id,
+				id: user.id,
 				userName: user.userName,
 				createdAt: user.createdAt,
 			});

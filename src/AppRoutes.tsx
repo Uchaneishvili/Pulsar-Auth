@@ -3,6 +3,7 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Home from "./pages/home/Home";
 import { RequireAuth } from "./utils/Auth";
+import Users from "./pages/users/Users";
 
 export const AppRoutes = () => {
 	return (
@@ -14,6 +15,14 @@ export const AppRoutes = () => {
 				element={
 					<RequireAuth>
 						<Home />
+					</RequireAuth>
+				}
+			/>
+			<Route
+				path="/users"
+				element={
+					<RequireAuth>
+						<Users />
 					</RequireAuth>
 				}
 			/>

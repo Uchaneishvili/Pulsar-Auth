@@ -22,11 +22,11 @@ export const LOGIN_MUTATION = gql`
 `;
 
 export const REGISTER_MUTATION = gql`
-	mutation registerUser($userInput: UserInput) {
+	mutation registerUser($userInput: UserInput!) {
 		registerUser(userInput: $userInput) {
 			token
 			user {
-				_id
+				id
 				firstName
 				lastName
 				userName
