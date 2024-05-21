@@ -29,3 +29,14 @@ body {
 	height: 63px;
 	border-bottom: 1px solid;
 }
+
+.page-wrapper {
+	background: #ffffff;
+	padding: 25px 16px 25px 16px;
+	margin: 10px 25px 10px 25px;
+}
+
+.breadCrumb {
+	margin: 10px 25px;
+	padding: 5px 10px;
+}

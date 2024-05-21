@@ -1,9 +1,61 @@
 import { FC, useContext } from "react";
 import AuthContext from "../../contexts/AuthContext";
+import { Table } from "antd";
+import Page from "../../components/Page";
+import Bread from "../../components/Bread";
 
 const Home: FC = () => {
 	const { userInfo } = useContext(AuthContext);
 	console.log("sd", userInfo);
-	return <>123</>;
+
+	const routes = [
+		{
+			path: "",
+			breadcrumbName: "Users",
+		},
+	];
+
+	const dataSource = [
+		{
+			key: "1",
+			name: "Mike",
+			age: 32,
+			address: "10 Downing Street",
+		},
+		{
+			key: "2",
+			name: "John",
+			age: 42,
+			address: "10 Downing Street",
+		},
+	];
+
+	const columns = [
+		{
+			title: "Name",
+			dataIndex: "name",
+			key: "name",
+		},
+		{
+			title: "Age",
+			dataIndex: "age",
+			key: "age",
+		},
+		{
+			title: "Address",
+			dataIndex: "address",
+			key: "address",
+		},
+	];
+
+	return (
+		<>
+			<Bread routes={routes} />
+
+			<Page>
+				<Table columns={columns} dataSource={dataSource} />
+			</Page>
+		</>
+	);
 };
 export default Home;
