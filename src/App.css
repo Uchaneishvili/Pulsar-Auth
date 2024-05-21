@@ -5,6 +5,8 @@ body {
 .rightContainer {
 	display: flex;
 	align-items: center;
+	width: 100%;
+	justify-content: flex-end;
 }
 
 .header {
@@ -15,4 +17,15 @@ body {
 	z-index: 9;
 	align-items: center;
 	background-color: #ffffff !important;
+}
+
+.logo {
+	background: #001529;
+	padding: 16px 24px;
+	color: #05363f;
+	text-align: center;
+	font-weight: bold;
+	font-size: 20px;
+	height: 63px;
+	border-bottom: 1px solid;
 }

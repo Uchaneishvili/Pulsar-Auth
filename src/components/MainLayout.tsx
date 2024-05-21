@@ -3,13 +3,15 @@ import { FC, useContext, useEffect } from "react";
 import { AppRoutes } from "../AppRoutes";
 import AuthContext from "../contexts/AuthContext";
 import PageHeader from "./PageHeader";
+import { Sidebar } from "./Sidebar";
 
 const MainLayout: FC = () => {
 	const { loadUserInfo } = useContext(AuthContext);
-	const publicRoutes = ["/login", "/register"];
 
 	useEffect(() => {
 		const run = async () => {
+			const publicRoutes = ["/login", "/register"];
+
 			if (!publicRoutes.includes(window.location.pathname)) {
 				try {
 					await loadUserInfo();
@@ -23,7 +25,9 @@ const MainLayout: FC = () => {
 
 	return (
 		<Layout style={{ minHeight: "100vh" }}>
-			<Layout style={{ marginLeft: 250 }}>
+			<Sidebar />
+
+			<Layout id="contextWrapper" style={{ marginLeft: 250 }}>
 				<PageHeader />
 				<AppRoutes />
 			</Layout>
