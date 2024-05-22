@@ -38,6 +38,7 @@ class AuthLocal {
 	}
 
 	static isUserAuthenticated(): boolean {
+		console.log("localStorage", localStorage.getItem(TOKEN_KEY));
 		return !!localStorage.getItem(TOKEN_KEY);
 	}
 

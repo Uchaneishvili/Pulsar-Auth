@@ -11,6 +11,7 @@ export const GET_USERS = gql`
 				createdAt
 				signInCount
 			}
+			totalCount
 		}
 	}
 `;

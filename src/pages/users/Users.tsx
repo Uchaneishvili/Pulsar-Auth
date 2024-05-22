@@ -1,17 +1,17 @@
-import { FC, useContext } from "react";
-import AuthContext from "../../contexts/AuthContext";
+import { FC, useState } from "react";
 import { Table } from "antd";
 import Page from "../../components/Page";
 import Bread from "../../components/Bread";
-import { useMutation, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { GET_USERS } from "../../apis/queries/userQueries";
+import FormatData from "../../utils/FormatData";
 
 const Users: FC = () => {
-	const { userInfo } = useContext(AuthContext);
-	console.log("sd", userInfo);
-	const { loading, error, data, fetchMore } = useQuery(GET_USERS, {
+	const [currentPage, setCurrentPage] = useState(1);
+
+	const { loading, data } = useQuery(GET_USERS, {
 		variables: {
-			page: 1, // Set the initial page number
+			page: currentPage, // Set the initial page number
 		},
 	});
 
@@ -21,8 +21,6 @@ const Users: FC = () => {
 			breadcrumbName: "Users",
 		},
 	];
-
-	console.log();
 
 	const columns = [
 		{
@@ -47,11 +45,18 @@ const Users: FC = () => {
 			key: "signInCount",
 		},
 		{
-			title: "Created At",
+			title: "Created Date",
 			dataIndex: "createdAt",
 			key: "createdAt",
+			render: (val: string) => {
+				return FormatData.formatDateTime(val);
+			},
 		},
 	];
+
+	const handlePageChange = (page: number) => {
+		setCurrentPage(page);
+	};
 
 	return (
 		<>
@@ -59,9 +64,16 @@ const Users: FC = () => {
 
 			<Page>
 				<Table
+					loading={loading}
 					columns={columns}
 					dataSource={data?.getUsers.nodes || []}
 					rowKey={(record) => record.id}
+					pagination={{
+						current: currentPage,
+						total: data?.getUsers.totalCount,
+						pageSize: 10, // Number of records per page
+						onChange: handlePageChange,
+					}}
 				/>
 			</Page>
 		</>
