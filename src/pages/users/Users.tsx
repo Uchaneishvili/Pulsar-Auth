@@ -38,6 +38,11 @@ const Users: FC = () => {
 			dataIndex: "lastName",
 			key: "lastName",
 		},
+		{
+			title: "Sign-in Count",
+			dataIndex: "successedSignInCount",
+			key: "successedSignInCount",
+		},
 
 		{
 			title: "Created Date",

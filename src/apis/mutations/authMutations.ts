@@ -17,6 +17,7 @@ export const LOGIN_MUTATION = gql`
 			firstName
 			lastName
 			createdAt
+			successedSignInCount
 		}
 	}
 `;

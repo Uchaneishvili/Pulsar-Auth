@@ -9,7 +9,7 @@ export const GET_USERS = gql`
 				lastName
 				userName
 				createdAt
-				signInCount
+				successedSignInCount
 			}
 			totalCount
 		}

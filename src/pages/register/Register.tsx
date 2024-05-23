@@ -8,7 +8,6 @@ import styles from "./Register.module.css";
 import { useState } from "react";
 import { REGISTER_MUTATION } from "../../apis/mutations/authMutations";
 import { useMutation } from "@apollo/client";
-import AuthLocal from "../../utils/Auth";
 
 interface FormData {
 	userName: string;
@@ -30,17 +29,11 @@ const Register = () => {
 	const handleSubmit = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
 		try {
-			const { data } = await registerUser({
+			await registerUser({
 				variables: { userInput: formData },
+			}).then(() => {
+				window.location.href = "/login";
 			});
-
-			if (data.registerUser.token) {
-				AuthLocal.setToken(data.registerUser.token);
-				// Redirect to a protected route or handle successful register
-				window.location.href = "/";
-			} else {
-				console.log(data);
-			}
 		} catch (err) {
 			console.error("Register error:", err);
 			// Handle register errors (e.g., display error message)
