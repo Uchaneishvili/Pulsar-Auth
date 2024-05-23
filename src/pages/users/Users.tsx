@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import { Table } from "antd";
 import Page from "../../components/Page";
 import Bread from "../../components/Bread";
@@ -10,43 +10,43 @@ import AuthContext from "../../contexts/AuthContext";
 
 const Users: FC = () => {
 	const [currentPage, setCurrentPage] = useState(1);
-	const { userInfo } = useContext(AuthContext);
-
-	const { loading, data } = useQuery(GET_USERS, {
-		variables: {
-			page: currentPage,
-		},
+	const { loading, data, refetch } = useQuery(GET_USERS, {
+		variables: { page: currentPage },
 	});
+	const { userInfo } = useContext(AuthContext);
+	useEffect(() => {
+		const socket = new WebSocket("ws://localhost:8080");
+		socket.onopen = () => {
+			console.log("WebSocket connection opened");
+		};
+		socket.onmessage = (event) => {
+			const data = JSON.parse(event.data);
+			console.log(data.users);
+			refetch();
+		};
+		socket.onclose = () => {
+			console.log("WebSocket connection closed");
+		};
+		socket.onerror = (error) => {
+			console.error("WebSocket error:", error);
+		};
 
-	const routes = [
-		{
-			path: "",
-			breadcrumbName: "Users",
-		},
-	];
+		return () => {
+			socket.close();
+		};
+	}, [refetch]);
+
+	const routes = [{ path: "", breadcrumbName: "Users" }];
 
 	const columns = [
-		{
-			title: "User Name",
-			dataIndex: "userName",
-			key: "userName",
-		},
-		{
-			title: "First Name",
-			dataIndex: "firstName",
-			key: "firstName",
-		},
-		{
-			title: "Last Name",
-			dataIndex: "lastName",
-			key: "lastName",
-		},
+		{ title: "User Name", dataIndex: "userName", key: "userName" },
+		{ title: "First Name", dataIndex: "firstName", key: "firstName" },
+		{ title: "Last Name", dataIndex: "lastName", key: "lastName" },
 		{
 			title: "Sign-in Count",
 			dataIndex: "successedSignInCount",
 			key: "successedSignInCount",
 		},
-
 		{
 			title: "Created Date",
 			dataIndex: "createdAt",
@@ -64,7 +64,6 @@ const Users: FC = () => {
 	return (
 		<>
 			<Bread routes={routes} />
-
 			<div
 				style={{
 					display: "flex",
@@ -74,19 +73,18 @@ const Users: FC = () => {
 			>
 				<Card
 					title={"Personal Sign-in Count"}
-					value={userInfo!.successedSignInCount}
+					value={userInfo?.successedSignInCount || 0}
 				/>
 				<Card
 					title={"Global Sign-in Count"}
-					value={data?.getUsers.totalSignInCount}
+					value={data?.getUsers.totalSignInCount || 0}
 				/>
 			</div>
-
 			<Page>
 				<Table
 					loading={loading}
 					columns={columns}
-					dataSource={data?.getUsers.nodes || []}
+					dataSource={data?.getUsers.nodes}
 					rowKey={(record) => record.id}
 					pagination={{
 						current: currentPage,
@@ -99,4 +97,5 @@ const Users: FC = () => {
 		</>
 	);
 };
+
 export default Users;
