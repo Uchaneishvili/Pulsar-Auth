@@ -28,6 +28,31 @@ const Login = () => {
 
 	const handleSubmit = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
+
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		if (!emailRegex.test(formData.userName)) {
+			notification.error({
+				message: "The email address you entered is invalid",
+				description:
+					"Please double-check and enter a valid email address to proceed with the login.",
+			});
+			return;
+		}
+
+		if (formData.password.length === 0) {
+			notification.error({
+				message: "The password field is required.",
+				description: "Please enter your password to log in to your account.",
+			});
+			return;
+		} else if (formData.password.length < 6) {
+			notification.error({
+				message: "Sorry, but your password is too short to log in.",
+				description: "Please enter a password with a minimum of 6 characters",
+			});
+			return;
+		}
+
 		try {
 			const { data } = await loginUser({ variables: formData });
 
@@ -57,6 +82,12 @@ const Login = () => {
 					description:
 						"Your account will be temporarily locked after multiple failed login attempts for security reasons",
 				});
+			} else {
+				notification.error({
+					message: "Fail",
+					description:
+						"An error occurred while processing your request. Please try again later or contact support if the issue persists",
+				});
 			}
 		}
 	};
@@ -71,12 +102,12 @@ const Login = () => {
 					<div className={styles.inputForm}>
 						<EmailIcon />
 						<input
+							type="mail"
 							name="userName"
 							onChange={(e) =>
 								setFormData({ ...formData, userName: e.target.value })
 							}
 							value={formData.userName}
-							type="text"
 							className={styles.input}
 							placeholder="Enter your Email"
 						/>

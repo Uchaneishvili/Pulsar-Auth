@@ -8,10 +8,12 @@ import styles from "./Register.module.css";
 import { useState } from "react";
 import { REGISTER_MUTATION } from "../../apis/mutations/authMutations";
 import { useMutation } from "@apollo/client";
+import { notification } from "antd";
 
 interface FormData {
 	userName: string;
 	password: string;
+	repeatPassword: string;
 	firstName: string;
 	lastName: string;
 }
@@ -22,21 +24,72 @@ const Register = () => {
 	const [formData, setFormData] = useState<FormData>({
 		userName: "",
 		password: "",
+		repeatPassword: "",
 		firstName: "",
 		lastName: "",
 	});
 
 	const handleSubmit = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
+
+		console.log(formData);
+
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		if (!emailRegex.test(formData.userName)) {
+			notification.error({
+				message: "The email address you entered is invalid",
+				description:
+					"Please enter a valid email address in the correct format (e.g., example@domain.com).",
+			});
+			return;
+		}
+
+		if (formData.password.length === 0) {
+			notification.error({
+				message: "The password field is required.",
+				description: "Please enter your password to create an account.",
+			});
+			return;
+		} else if (formData.password.length < 6) {
+			notification.error({
+				message: "Oops, your password must be at least 6 characters long.",
+				description: "Please enter a stronger password to log in successfull",
+			});
+			return;
+		} else if (formData.password !== formData.repeatPassword) {
+			notification.error({
+				message: "Passwords do not match",
+				description: "Please ensure the passwords you entered match.",
+			});
+			return;
+		}
+
+		const data = {
+			userName: formData.userName,
+			firstName: formData.firstName,
+			lastName: formData.lastName,
+			password: formData.password,
+		};
 		try {
 			await registerUser({
-				variables: { userInput: formData },
+				variables: { userInput: data },
 			}).then(() => {
 				window.location.href = "/login";
 			});
-		} catch (err) {
-			console.error("Register error:", err);
-			// Handle register errors (e.g., display error message)
+		} catch (err: any) {
+			if (err?.message.includes("USERNAME_ALREADY_EXISTS")) {
+				notification.error({
+					message: "Email already registered",
+					description:
+						"The email address you entered is already associated with an existing account. Please use a different email or log in if you already have an account.",
+				});
+			} else {
+				notification.error({
+					message: "Fail",
+					description:
+						"An error occurred while processing your request. Please try again later or contact support if the issue persists",
+				});
+			}
 		}
 	};
 
@@ -121,6 +174,10 @@ const Register = () => {
 							className={styles.input}
 							placeholder="Enter your Password"
 							autoComplete="false"
+							name="repeatPassword"
+							onChange={(e) =>
+								setFormData({ ...formData, repeatPassword: e.target.value })
+							}
 						/>
 						<span
 							className={styles.showPassword}
