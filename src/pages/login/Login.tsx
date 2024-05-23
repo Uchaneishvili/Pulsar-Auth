@@ -10,6 +10,7 @@ import { useMutation } from "@apollo/client";
 import { LOGIN_MUTATION } from "../../apis/mutations/authMutations";
 import AuthLocal from "../../utils/Auth";
 import AuthContext from "../../contexts/AuthContext";
+import { notification } from "antd";
 
 interface FormData {
 	userName: string;
@@ -17,7 +18,7 @@ interface FormData {
 }
 
 const Login = () => {
-	const [loginUser] = useMutation(LOGIN_MUTATION);
+	const [loginUser, errors] = useMutation(LOGIN_MUTATION);
 	const [show, setShow] = useState(false);
 	const [formData, setFormData] = useState<FormData>({
 		userName: "",
@@ -29,6 +30,9 @@ const Login = () => {
 		event.preventDefault();
 		try {
 			const { data } = await loginUser({ variables: formData });
+
+			if (errors) {
+			}
 			AuthLocal.setToken(data.loginUser.token);
 
 			console.log(data.loginUser);
@@ -43,12 +47,23 @@ const Login = () => {
 
 			window.location.href = "/";
 		} catch (err) {
+			if (errors.error?.message.includes("MAXIMUM_LOGIN_ATTEMPTS_REACHED")) {
+				notification.error({
+					message: "Maximum Login Attempts Reached",
+					description:
+						"Your account is temporarily locked for security reasons.",
+				});
+			} else if (errors.error?.message.includes("INVALID_PASSWORD")) {
+				notification.error({
+					message: "Invalid password",
+					description:
+						"Your account will be temporarily locked after multiple failed login attempts for security reasons",
+				});
+			}
+
 			console.error("Login error:", err);
-			// Handle login errors (e.g., display error message)
 		}
 	};
-
-	console.log(formData);
 
 	return (
 		<>

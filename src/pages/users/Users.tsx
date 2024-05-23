@@ -11,7 +11,7 @@ const Users: FC = () => {
 
 	const { loading, data } = useQuery(GET_USERS, {
 		variables: {
-			page: currentPage, // Set the initial page number
+			page: currentPage,
 		},
 	});
 
@@ -40,11 +40,6 @@ const Users: FC = () => {
 		},
 
 		{
-			title: "count",
-			dataIndex: "signInCount",
-			key: "signInCount",
-		},
-		{
 			title: "Created Date",
 			dataIndex: "createdAt",
 			key: "createdAt",
@@ -71,7 +66,7 @@ const Users: FC = () => {
 					pagination={{
 						current: currentPage,
 						total: data?.getUsers.totalCount,
-						pageSize: 10, // Number of records per page
+						pageSize: 10,
 						onChange: handlePageChange,
 					}}
 				/>
