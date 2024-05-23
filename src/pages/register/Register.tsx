@@ -32,8 +32,6 @@ const Register = () => {
 	const handleSubmit = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
 
-		console.log(formData);
-
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		if (!emailRegex.test(formData.userName)) {
 			notification.error({
@@ -74,7 +72,14 @@ const Register = () => {
 			await registerUser({
 				variables: { userInput: data },
 			}).then(() => {
-				window.location.href = "/login";
+				notification.success({
+					message: "Success",
+					description: "Account is created successfully.",
+				});
+
+				setInterval(() => {
+					window.location.href = "/login";
+				}, 500);
 			});
 		} catch (err: any) {
 			if (err?.message.includes("USERNAME_ALREADY_EXISTS")) {

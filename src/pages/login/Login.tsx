@@ -58,17 +58,19 @@ const Login = () => {
 
 			AuthLocal.setToken(data.loginUser.token);
 
-			console.log(data.loginUser);
-			const user = data.loginUser;
-			setUserInfo({
-				firstName: user.firstName,
-				lastName: user.lastName,
-				id: user.id,
-				userName: user.userName,
-				createdAt: user.createdAt,
-			});
+			if (data.loginUser) {
+				const user = data.loginUser;
+				setUserInfo({
+					firstName: user.firstName,
+					lastName: user.lastName,
+					id: user.id,
+					userName: user.userName,
+					successedSignInCount: user.successedSignInCount + 1,
+					createdAt: user.createdAt,
+				});
 
-			window.location.href = "/";
+				window.location.href = "/";
+			}
 		} catch (err: any) {
 			if (err?.message.includes("MAXIMUM_LOGIN_ATTEMPTS_REACHED")) {
 				notification.error({

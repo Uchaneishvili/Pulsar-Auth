@@ -3,6 +3,7 @@ export interface IUser {
 	userName: string;
 	firstName: string;
 	lastName: string;
+	successedSignInCount: number;
 	createdAt: string;
 }
 

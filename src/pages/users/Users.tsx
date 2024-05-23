@@ -1,13 +1,16 @@
-import { FC, useState } from "react";
+import { FC, useContext, useState } from "react";
 import { Table } from "antd";
 import Page from "../../components/Page";
 import Bread from "../../components/Bread";
 import { useQuery } from "@apollo/client";
 import { GET_USERS } from "../../apis/queries/userQueries";
 import FormatData from "../../utils/FormatData";
+import Card from "../../components/ui/card/Card";
+import AuthContext from "../../contexts/AuthContext";
 
 const Users: FC = () => {
 	const [currentPage, setCurrentPage] = useState(1);
+	const { userInfo } = useContext(AuthContext);
 
 	const { loading, data } = useQuery(GET_USERS, {
 		variables: {
@@ -62,6 +65,23 @@ const Users: FC = () => {
 		<>
 			<Bread routes={routes} />
 
+			<div
+				style={{
+					display: "flex",
+					justifyContent: "space-around",
+					padding: "20px",
+				}}
+			>
+				<Card
+					title={"Personal Sign-in Count"}
+					value={userInfo!.successedSignInCount}
+				/>
+				<Card
+					title={"Global Sign-in Count"}
+					value={data?.getUsers.totalSignInCount}
+				/>
+			</div>
+
 			<Page>
 				<Table
 					loading={loading}
@@ -71,7 +91,7 @@ const Users: FC = () => {
 					pagination={{
 						current: currentPage,
 						total: data?.getUsers.totalCount,
-						pageSize: 10,
+						pageSize: 5,
 						onChange: handlePageChange,
 					}}
 				/>

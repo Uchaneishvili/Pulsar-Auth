@@ -12,6 +12,7 @@ export const GET_USERS = gql`
 				successedSignInCount
 			}
 			totalCount
+			totalSignInCount
 		}
 	}
 `;
