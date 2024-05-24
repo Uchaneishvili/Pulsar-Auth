@@ -20,8 +20,6 @@ const Users: FC = () => {
 			console.log("WebSocket connection opened");
 		};
 		socket.onmessage = (event) => {
-			const data = JSON.parse(event.data);
-			console.log(data.users);
 			refetch();
 		};
 		socket.onclose = () => {
@@ -39,9 +37,21 @@ const Users: FC = () => {
 	const routes = [{ path: "", breadcrumbName: "Users" }];
 
 	const columns = [
-		{ title: "User Name", dataIndex: "userName", key: "userName" },
-		{ title: "First Name", dataIndex: "firstName", key: "firstName" },
-		{ title: "Last Name", dataIndex: "lastName", key: "lastName" },
+		{
+			title: "User Name",
+			dataIndex: "userName",
+			key: "userName",
+		},
+		{
+			title: "First Name",
+			dataIndex: "firstName",
+			key: "firstName",
+		},
+		{
+			title: "Last Name",
+			dataIndex: "lastName",
+			key: "lastName",
+		},
 		{
 			title: "Sign-in Count",
 			dataIndex: "successedSignInCount",
