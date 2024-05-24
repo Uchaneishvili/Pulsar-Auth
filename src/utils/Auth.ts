@@ -8,13 +8,11 @@ export function RequireAuth({ children }: { children: JSX.Element }) {
 	let location = useLocation();
 	const navigate = useNavigate();
 
-	console.log(userInfo);
-	if (!userInfo) {
+	if (!userInfo || Object.keys(userInfo).length === 0) {
 		// Redirect them to the /login page, but save the current location they were
 		// trying to go to when they were redirected. This allows us to send them
 		// along to that page after they login, which is a nicer user experience
 		// than dropping them off on the home page.
-		console.log("12");
 		const redirectUrl =
 			"/login?redirect=" +
 			encodeURIComponent(location.pathname + location.search);
@@ -37,8 +35,7 @@ class AuthLocal {
 		localStorage.setItem(TOKEN_KEY, token as string);
 	}
 
-	static isUserAuthenticated(): boolean {
-		console.log("localStorage", localStorage.getItem(TOKEN_KEY));
+	static refreshToken(): boolean {
 		return !!localStorage.getItem(TOKEN_KEY);
 	}
 
