@@ -1,46 +1,60 @@
-# Getting Started with Create React App
+# Pulsar Auth
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Pulsar Auth is a React-based front-end application that serves as the authentication and user interface component for the PulsarAI project. It provides a seamless user experience for interacting with the GraphQL API and WebSocket server implemented in the backend.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **User Authentication**: Pulsar Auth incorporates user authentication functionality, allowing users to sign up, log in, and manage their accounts securely.
+- **GraphQL Integration**: The application integrates with the GraphQL API provided by the PulsarAI backend, enabling seamless data fetching and mutations.
+- **Real-time Communication**: With the help of the WebSocket server, Pulsar Auth facilitates real-time communication between the client and the server, enabling real-time updates and notifications.
+- **Modern UI**: The user interface is built using Ant Design, a popular React UI library, ensuring a modern and responsive design.
 
-### `npm start`
+## Prerequisites
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Before running the project, ensure that you have the following installed:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Node.js (version >= 14.x)
+- npm (Node Package Manager)
 
-### `npm test`
+## Getting Started
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository:
 
-### `npm run build`
+```bash
+git clone https://github.com/Uchaneishvili/Pulsar-Auth.git
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Navigate to the project directory:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+cd pulsar-auth
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Install the dependencies:
 
-### `npm run eject`
+```bash
+npm install
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+4. Start the development server:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+This command will start the development server and open the application in your default web browser.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Usage
 
-## Learn More
+Once the application is running, you can navigate through the various pages and components to sign up, log in, and interact with the [GraphQL-API-with-Apollo-Server](https://github.com/Uchaneishvili/GraphQL-API-with-Apollo-Server). The application will communicate with the GraphQL API and WebSocket server to provide real-time updates and functionality.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## License
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+This project is licensed under the [MIT License](LICENSE).
+
+## Acknowledgements
+
+- [React](https://reactjs.org/)
+- [Apollo Client](https://www.apollographql.com/docs/react/)
+- [Ant Design](https://ant.design/)
+- [React Router](https://reactrouter.com/)
