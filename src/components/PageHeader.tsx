@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { UserMenu } from "./UserMenu";
 import { Layout } from "antd";
+import { UserMenu } from "./UserMenu";
 
 const PageHeader: FC = () => {
 	return (

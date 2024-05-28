@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import AuthContext from "../contexts/AuthContext";
 import { IUser } from "../types/user";
@@ -8,19 +8,17 @@ export function RequireAuth({ children }: { children: JSX.Element }) {
 	let location = useLocation();
 	const navigate = useNavigate();
 
-	if (!userInfo || Object.keys(userInfo).length === 0) {
-		// Redirect them to the /login page, but save the current location they were
-		// trying to go to when they were redirected. This allows us to send them
-		// along to that page after they login, which is a nicer user experience
-		// than dropping them off on the home page.
-		const redirectUrl =
-			"/login?redirect=" +
-			encodeURIComponent(location.pathname + location.search);
-		navigate(redirectUrl, { replace: true });
-		return null;
-	}
+	useEffect(() => {
+		if (!userInfo || Object.keys(userInfo).length === 0) {
+			// Save the current location to local storage
+			const redirectUrl =
+				"/login?redirect=" +
+				encodeURIComponent(location.pathname + location.search);
+			navigate(redirectUrl, { replace: true });
+		}
+	}, [userInfo, location.pathname, location.search, navigate]);
 
-	return children;
+	return userInfo ? children : null;
 }
 
 const TOKEN_KEY = "token";

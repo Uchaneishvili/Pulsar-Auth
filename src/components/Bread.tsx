@@ -3,32 +3,41 @@ import { Breadcrumb } from "antd";
 import { Link } from "react-router-dom";
 import { HomeOutlined } from "@ant-design/icons";
 
+interface RouteItem {
+	path: string;
+	breadcrumbName: string;
+}
 interface IBreadProp {
-	routes: any[];
+	routes: RouteItem[];
 }
 
 const Bread: FC<IBreadProp> = (prop) => {
 	const extraBreadcrumbItems = prop.routes.map((row: any, index: number) => {
 		const last = prop.routes.length === index + 1;
-		return last ? (
-			<Breadcrumb.Item key={row.path}>{row.breadcrumbName}</Breadcrumb.Item>
-		) : (
-			<Breadcrumb.Item key={row.path}>
-				<Link to={row.path}>{row.breadcrumbName}</Link>
-			</Breadcrumb.Item>
-		);
+		return {
+			title: row.breadcrumbName,
+			path: last ? undefined : row.path,
+			key: row.path,
+			...(last
+				? {}
+				: { overlay: <Link to={row.path}>{row.breadcrumbName}</Link> }),
+		};
 	});
-	const breadcrumbItems = [
-		<Breadcrumb.Item key="home">
-			<Link to="/">
-				<HomeOutlined />
-			</Link>
-		</Breadcrumb.Item>,
-	].concat(extraBreadcrumbItems);
+
 	return (
 		<div className="breadCrumb">
-			<Breadcrumb>{breadcrumbItems}</Breadcrumb>
+			<Breadcrumb
+				items={[
+					{
+						key: "Home",
+						href: "/",
+						title: <HomeOutlined />,
+					},
+					...extraBreadcrumbItems,
+				]}
+			/>
 		</div>
 	);
 };
+
 export default Bread;

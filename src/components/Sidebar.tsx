@@ -14,12 +14,15 @@ export const Sidebar = () => {
 			contextWrapper.style.marginLeft = size;
 		}
 	};
-	const onCollapse = (collapsed: any) => {
-		collapsed
-			? setTimeout(() => {
-					triggerPageWidth();
-			  }, 500)
-			: triggerPageWidth();
+
+	const onCollapse = (collapsed: boolean) => {
+		if (collapsed) {
+			setTimeout(() => {
+				triggerPageWidth();
+			}, 500);
+		} else {
+			triggerPageWidth();
+		}
 	};
 
 	const navClassName = ({ isActive }: { isActive: boolean }) =>
@@ -39,18 +42,30 @@ export const Sidebar = () => {
 				collapsible
 			>
 				<div className="logo"></div>
-				<Menu theme="dark" mode="inline">
-					<Menu.Item key="home" icon={<HomeOutlined />}>
-						<NavLink end to="/" className={navClassName}>
-							Home
-						</NavLink>
-					</Menu.Item>
-					<Menu.Item key="users" icon={<UserOutlined />}>
-						<NavLink end to="/users" className={navClassName}>
-							Users
-						</NavLink>
-					</Menu.Item>
-				</Menu>
+				<Menu
+					theme="dark"
+					mode="inline"
+					items={[
+						{
+							key: "home",
+							icon: <HomeOutlined />,
+							label: (
+								<NavLink end to="/" className={navClassName}>
+									Home
+								</NavLink>
+							),
+						},
+						{
+							key: "users",
+							icon: <UserOutlined />,
+							label: (
+								<NavLink end to="/users" className={navClassName}>
+									Users
+								</NavLink>
+							),
+						},
+					]}
+				/>
 			</Sider>
 		</>
 	);
